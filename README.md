@@ -25,9 +25,7 @@ Clone and set up the AWS Access Provider:
 git clone https://github.com/common-fate/cf-provider-aws.git
 cd cf-provider-aws
 python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-exit
+.venv/bin/pip install -r requirements.txt
 cd ..
 ```
 
@@ -42,6 +40,25 @@ Log in to Common Fate:
 
 ```bash
 cf login
+```
+
+Ensure that your terminal has active AWS credentials with access to AWS IAM Identity Center:
+
+```bash
+# for example:
+export AWS_PROFILE=my-profile-with-access-to-aws-sso
+
+# ensure that your AWS_REGION variable is set to the region that AWS IAM Identity Center is running in
+export AWS_REGION=us-east-1 # for example - if IAM Identity Center runs in us-east-1
+```
+
+Configure the AWS provider:
+
+```bash
+export PROVIDER_CONFIG_SSO_IDENTITY_STORE_ID=$(aws sso-admin list-instances --query Instances[0].IdentityStoreId --output text)
+export PROVIDER_CONFIG_SSO_INSTANCE_ARN=$(aws sso-admin list-instances --query Instances[0].InstanceArn --output text)
+export PROVIDER_CONFIG_SSO_REGION=$AWS_REGION
+export PROVIDER_CONFIG_SSO_ROLE_ARN=""
 ```
 
 Query for AWS entitlements:
