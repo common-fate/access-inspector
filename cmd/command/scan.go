@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
-	"time"
 
 	"github.com/common-fate/access-inspector/pkg/loader"
 	"github.com/common-fate/clio"
@@ -25,7 +24,8 @@ func tableName(p providerregistrysdk.Provider, schemaVersion string, resourceTyp
 var Scan = cli.Command{
 	Name: "scan",
 	Flags: []cli.Flag{
-		&cli.StringFlag{Name: "provider-local-path", Required: true},
+		&cli.PathFlag{Name: "provider-local-path", Required: true},
+		&cli.PathFlag{Name: "output", Required: true},
 	},
 	Action: func(c *cli.Context) error {
 		ctx := c.Context
@@ -47,8 +47,7 @@ var Scan = cli.Command{
 			tasks = append(tasks, task)
 		}
 
-		now := time.Now().UTC()
-		dbfilename := fmt.Sprintf("file:reports/%s.db", now.Format("2006-01-02T15-04-05"))
+		dbfilename := fmt.Sprintf("file:%s", c.Path("output"))
 
 		db, err := sqlx.Open("sqlite3", dbfilename)
 		if err != nil {
@@ -95,6 +94,21 @@ var Scan = cli.Command{
 			if err != nil {
 				return errors.Wrapf(err, "creating table %s", table)
 			}
+		}
+
+		_, err = db.Exec("CREATE TABLE __common_fate_meta (describe TEXT)")
+		if err != nil {
+			return err
+		}
+
+		describeBytes, err := json.Marshal(describe)
+		if err != nil {
+			return err
+		}
+
+		_, err = db.Exec("INSERT INTO __common_fate_meta (describe) VALUES ($1)", string(describeBytes))
+		if err != nil {
+			return err
 		}
 
 		fetcher := loader.NewResourceFetcher(&hc)
@@ -146,6 +160,7 @@ var Scan = cli.Command{
 			if err != nil {
 				return errors.Wrapf(err, "inserting %+v into database", r)
 			}
+
 		}
 
 		// clio.Infow("got resources", resources)

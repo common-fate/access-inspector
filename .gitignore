@@ -1,2 +1,6 @@
 .env
 reports
+requests.json
+report.db
+cleanup.sh
+.DS_Store

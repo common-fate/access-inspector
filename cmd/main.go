@@ -13,11 +13,11 @@ func main() {
 	clio.SetLevelFromEnv("CF_LOG")
 
 	app := &cli.App{
-		Name:      "iamzero",
+		Name:      "access-inspector",
 		Writer:    os.Stderr,
 		Usage:     "https://commonfate.io",
-		UsageText: "iamzero [options] [command]",
-		Commands:  []*cli.Command{&command.Scan},
+		UsageText: "access-inspector [options] [command]",
+		Commands:  []*cli.Command{&command.Scan, &command.Analyze, &command.DumpRequests},
 	}
 	err := app.Run(os.Args)
 	if err != nil {
