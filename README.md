@@ -55,8 +55,8 @@ export AWS_REGION=us-east-1 # for example - if IAM Identity Center runs in us-ea
 Configure the AWS provider:
 
 ```bash
-export PROVIDER_CONFIG_SSO_IDENTITY_STORE_ID=$(aws sso-admin list-instances --query Instances[0].IdentityStoreId --output text)
-export PROVIDER_CONFIG_SSO_INSTANCE_ARN=$(aws sso-admin list-instances --query Instances[0].InstanceArn --output text)
+export PROVIDER_CONFIG_SSO_IDENTITY_STORE_ID=$(aws sso-admin list-instances --query 'Instances[0].IdentityStoreId' --output text)
+export PROVIDER_CONFIG_SSO_INSTANCE_ARN=$(aws sso-admin list-instances --query 'Instances[0].InstanceArn' --output text)
 export PROVIDER_CONFIG_SSO_REGION=$AWS_REGION
 export PROVIDER_CONFIG_SSO_ROLE_ARN=""
 ```
