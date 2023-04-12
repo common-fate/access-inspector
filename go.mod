@@ -6,6 +6,7 @@ require (
 	github.com/common-fate/apikit v0.2.1-0.20220526131641-1d860b34f6ed
 	github.com/common-fate/cli v0.3.3
 	github.com/common-fate/clio v1.1.0
+	github.com/common-fate/common-fate v0.15.0-alpha1.0.20230313123710-ce52f67312c9
 	github.com/common-fate/provider-registry-sdk-go v0.17.5
 	github.com/jmoiron/sqlx v1.3.5
 	github.com/joho/godotenv v1.5.1
@@ -19,7 +20,6 @@ require (
 	github.com/99designs/go-keychain v0.0.0-20191008050251-8e49817e8af4 // indirect
 	github.com/99designs/keyring v1.2.2 // indirect
 	github.com/BurntSushi/toml v1.2.1 // indirect
-	github.com/common-fate/common-fate v0.15.0-alpha1.0.20230313123710-ce52f67312c9 // indirect
 	github.com/common-fate/iso8601 v1.0.2 // indirect
 	github.com/common-fate/useragent v0.1.0 // indirect
 	github.com/danieljoos/wincred v1.1.2 // indirect
